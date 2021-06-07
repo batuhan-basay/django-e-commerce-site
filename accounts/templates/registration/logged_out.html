@@ -1,0 +1,9 @@
+{% extends 'base.html' %} {% block title %} Çıkış yapıldı {% endblock title %}
+{%block content %}
+<h1 class="display-4 my-2">Çıkış yapıldı</h1>
+<hr />
+<p>
+  Hesabınızdan başarıyla çıkış yaptınız, tekrar giriş yapabilirsiniz
+  <a href="{% url 'login' %}">buradan</a>.
+</p>
+{% endblock content %}

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Fatura Siparişi - {{order.id}}</title>
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+    />
+  </head>
+  <body>
+    <div class="container my-4">
+      <h2>Sioariş id - {{order.id}}</h2>
+      <h4 class="mb-3">
+        To - {{order.user.first_name|default:order.user.username}}
+        {{order.user.last_name}}
+      </h4>
+      <h4 class="font-weight-light">{{order.address}}</h4>
+      <h4 class="font-weight-light mb-3">{{order.city}}, {{order.pin_code}}</h4>
+      <h5 class="font-weight-light mb-4"> {{order.created}}</h5>
+      <hr />
+      <table class="table table-striped mt-4">
+        <thead class="table-dark">
+          <tr>
+            <td>İsim</td>
+            <td>Fiyat</td>
+            <td>Miktar</td>
+            <td>Toplam</td>
+          </tr>
+        </thead>
+        <tbody>
+          {% for o in order.items.all %}
+          <tr>
+            <td>{{o.product.name}}</td>
+            <td>{{o.product.price}}</td>
+            <td>{{o.quantity}}</td>
+            <td>{{o.total}}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+        <tfoot>
+          <tr>
+            <td colspan="2"></td>
+            <td class="text-right">Genel Toplam -</td>
+            <td>
+              <b>{{order.total_price}}</b>
+            </td>
+          </tr>
+        </tfoot>
+      </table>
+      <h5>
+        Ödeme durumu - {% if order.paid %}
+        <span class="badge badge-success">Ücretli</span>
+        {% else %}
+        <span class="badge badge-danger">Ödeme bekleniyor</span>
+        {% endif %}
+      </h5>
+      <h5>Ödeme modu - Kapıda ödeme</h5>
+      <h5>Durum - {{order.status}}</h5>
+    </div>
+    <footer class="text-center d-print-none">
+      <button class="btn btn-primary" onclick="window.print()">Yazdır</button>
+      <button class="btn btn-danger" onclick="history.back()">Geri git</button>
+    </footer>
+  </body>
+</html>
